@@ -7,9 +7,14 @@ const Home = () => {
     <View style={style.container}>
       <Pressable
         style={style?.button}
-        onPress={() => showToast({ message: 'Hello' + count++ })}
+        onPress={() =>
+          showToast({
+            message: 'Hello' + count++,
+            position: 'bottom',
+          })
+        }
       >
-        <Text style={{ color: '#fff' }}>Show Toast</Text>
+        <Text style={style.buttonText}>Show Toast</Text>
       </Pressable>
     </View>
   );
@@ -28,5 +33,8 @@ const style = StyleSheet.create({
     padding: 10,
     backgroundColor: '#000',
     borderRadius: 10,
+  },
+  buttonText: {
+    color: '#fff',
   },
 });

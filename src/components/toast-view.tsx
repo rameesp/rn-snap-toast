@@ -1,4 +1,4 @@
-import { BlurView } from 'expo-blur';
+import { BlurView, type BlurTint } from 'expo-blur';
 import { StyleSheet, Text, View } from 'react-native';
 import Animated, { Easing, FadeIn, FadeOut } from 'react-native-reanimated';
 import TickIcon from '../assets/tick-icon';
@@ -9,12 +9,21 @@ interface ToastViewProps {
   isActionable: boolean;
   buttonText: string;
   onButtonPress: () => void;
+  blurIntensity?: number;
+  blurType?: BlurTint;
+  position?: 'top' | 'bottom';
 }
 
 const AnimatedView = Animated.createAnimatedComponent(View);
 
-const ToastView = ({ message, isSuccess }: ToastViewProps) => {
-  const styles = makeStyles();
+const ToastView = ({
+  message,
+  isSuccess,
+  blurIntensity = 70,
+  blurType = 'dark',
+  position = 'bottom',
+}: ToastViewProps) => {
+  const styles = makeStyles(position);
 
   return (
     <AnimatedView
@@ -22,7 +31,11 @@ const ToastView = ({ message, isSuccess }: ToastViewProps) => {
       exiting={FadeOut.duration(300).easing(Easing.linear)}
       style={styles?.container}
     >
-      <BlurView intensity={30} tint={'dark'} style={StyleSheet.absoluteFill} />
+      <BlurView
+        intensity={blurIntensity}
+        tint={blurType}
+        style={StyleSheet.absoluteFill}
+      />
       {isSuccess && <TickIcon />}
       <Text numberOfLines={2} style={styles.message}>
         {message}
@@ -33,11 +46,12 @@ const ToastView = ({ message, isSuccess }: ToastViewProps) => {
 
 export default ToastView;
 
-const makeStyles = () =>
+const makeStyles = (position: 'top' | 'bottom') =>
   StyleSheet.create({
     container: {
       position: 'absolute',
-      bottom: 0,
+      bottom: position === 'bottom' ? 0 : undefined,
+      top: position === 'top' ? 0 : undefined,
       alignSelf: 'center',
       shadowColor: '#1c1c1e',
       shadowOffset: { width: 0, height: 2 },
@@ -50,7 +64,6 @@ const makeStyles = () =>
       width: '90%',
       justifyContent: 'center',
       alignItems: 'center',
-      marginBottom: 52,
       flexDirection: 'row',
       gap: 12,
       minWidth: '40%',

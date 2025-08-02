@@ -8,11 +8,15 @@ import React, {
 } from 'react';
 import Toast from '../components/toast';
 import { registerHideToast, registerShowToast } from '../service/toast-service';
+import type { BlurTint } from 'expo-blur/build/BlurView.types';
 
 interface ToastConfig {
   duration?: number;
   maxQueueSize?: number;
   animationDuration?: number;
+  blurIntensity?: number;
+  blurType?: BlurTint;
+  position?: 'top' | 'bottom';
 }
 
 interface ToastParams {
@@ -21,6 +25,7 @@ interface ToastParams {
   isSuccess?: boolean;
   isActionable?: boolean;
   buttonText?: string;
+  position?: 'top' | 'bottom';
   onButtonPress?: () => void;
   onFinish?: () => void;
 }
@@ -62,6 +67,8 @@ export const ToastProvider = ({
     duration = DEFAULT_DURATION,
     maxQueueSize = MAX_QUEUE_SIZE,
     animationDuration = ANIMATION_DURATION,
+    blurIntensity = 70,
+    blurType = 'dark',
   } = config;
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [toastState, setToastState] = useState<ToastState>({
@@ -70,6 +77,7 @@ export const ToastProvider = ({
     isSuccess: false,
     isActionable: false,
     buttonText: '',
+    position: 'bottom',
     onButtonPress: () => {},
     onFinish: () => {},
   });
@@ -162,7 +170,11 @@ export const ToastProvider = ({
   return (
     <ToastContext.Provider value={{ showToast, hideToast }}>
       {children}
-      <Toast {...toastState} />
+      <Toast
+        {...toastState}
+        blurIntensity={blurIntensity}
+        blurType={blurType}
+      />
     </ToastContext.Provider>
   );
 };

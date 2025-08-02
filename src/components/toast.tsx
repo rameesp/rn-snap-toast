@@ -1,3 +1,4 @@
+import type { BlurTint } from 'expo-blur/build/BlurView.types';
 import BaseView from './base-view';
 import ToastView from './toast-view';
 interface ToastProps {
@@ -7,6 +8,9 @@ interface ToastProps {
   isActionable?: boolean;
   buttonText?: string;
   onButtonPress?: () => void;
+  blurIntensity?: number;
+  blurType?: BlurTint;
+  position?: 'top' | 'bottom';
 }
 const Toast = ({
   isVisible,
@@ -15,6 +19,9 @@ const Toast = ({
   isActionable = false,
   buttonText = '',
   onButtonPress = () => {},
+  blurIntensity = 70,
+  blurType = 'dark',
+  position = 'bottom',
 }: ToastProps) => {
   const renderToast = () => {
     return (
@@ -24,6 +31,9 @@ const Toast = ({
         isActionable={isActionable}
         buttonText={buttonText}
         onButtonPress={onButtonPress}
+        blurIntensity={blurIntensity}
+        blurType={blurType}
+        position={position}
       />
     );
   };
