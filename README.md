@@ -1,11 +1,11 @@
 # rn-snap-toast
 
-A modern, customizable toast component for React Native and Expo with beautiful blur effects, smooth animations, and a powerful queue system.
+A modern, customizable toast component for **Expo** with beautiful blur effects, smooth animations, and a powerful queue system.
 
 ## ✨ Features
 
 - 🎨 **Beautiful UI** - Modern design with blur effects and smooth animations
-- 📱 **Cross-platform** - Works on both iOS and Android
+- 📱 **Expo Compatible** - Built specifically for Expo projects
 - 🔄 **Queue System** - Handles multiple toasts with configurable queue size
 - 🎯 **Flexible Positioning** - Show toasts at top or bottom of screen
 - ⚡ **Performance Optimized** - Built with React Native Reanimated for smooth animations
@@ -16,17 +16,21 @@ A modern, customizable toast component for React Native and Expo with beautiful 
 
 ## 📦 Installation
 
+This package is designed specifically for **Expo** projects. Make sure you have an Expo project set up.
+
 ```sh
 npm install rn-snap-toast
 ```
 
-### Peer Dependencies
+### Required Expo Dependencies
 
-This library requires the following peer dependencies:
+This library requires the following Expo dependencies:
 
 ```sh
-npm install expo-blur react-native-reanimated react-native-screens react-native-svg
+npx expo install expo-blur react-native-reanimated react-native-screens react-native-svg
 ```
+
+**Note:** This package is **Expo-only** and requires Expo's managed workflow or development builds. It is not compatible with bare React Native projects.
 
 ## 🚀 Quick Start
 
