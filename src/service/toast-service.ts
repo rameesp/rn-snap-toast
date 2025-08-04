@@ -1,5 +1,6 @@
-type ToastType = 'success' | 'error' | 'info';
-interface ToastParams {
+export type ToastType = 'success' | 'error' | 'info';
+
+export interface ToastParams {
   message: string;
   duration?: number;
   isSuccess?: boolean;

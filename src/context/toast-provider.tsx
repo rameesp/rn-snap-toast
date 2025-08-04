@@ -10,7 +10,7 @@ import Toast from '../components/toast';
 import { registerHideToast, registerShowToast } from '../service/toast-service';
 import type { BlurTint } from 'expo-blur/build/BlurView.types';
 
-interface ToastConfig {
+export interface ToastConfig {
   duration?: number;
   maxQueueSize?: number;
   animationDuration?: number;
@@ -23,7 +23,7 @@ interface ToastConfig {
   };
 }
 
-interface ToastParams {
+export interface ToastParams {
   message: string;
   duration?: number;
   isSuccess?: boolean;
