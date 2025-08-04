@@ -55,7 +55,7 @@ const Home = () => {
     showContextToast({
       message: 'Operation completed successfully!',
       isSuccess: true,
-      duration: 4000,
+      duration: 1000,
     });
   };
 

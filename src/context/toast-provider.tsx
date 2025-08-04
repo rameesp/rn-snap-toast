@@ -60,7 +60,7 @@ export const useToast = () => {
 
 const DEFAULT_DURATION = 3000;
 const MAX_QUEUE_SIZE = 10;
-const ANIMATION_DURATION = 3000;
+const ANIMATION_DURATION = 1000;
 
 export const ToastProvider = ({
   children,
@@ -108,10 +108,10 @@ export const ToastProvider = ({
       setToastParams((prev) => {
         if (prev.onFinish) {
           prev.onFinish();
-          return { ...prev, isVisible: false };
         }
-        return { ...prev, isVisible: false };
+        return prev;
       });
+      setToastState({ isVisible: false });
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
       }
@@ -127,10 +127,10 @@ export const ToastProvider = ({
     setToastParams((prev) => {
       if (prev.onFinish) {
         prev.onFinish();
-        return { ...prev, isVisible: false };
       }
-      return { ...prev, isVisible: false };
+      return prev;
     });
+    setToastState({ isVisible: false });
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
     }

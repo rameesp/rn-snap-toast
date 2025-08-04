@@ -4,7 +4,7 @@ import { ToastProvider } from 'rn-snap-toast';
 import Home from './Home';
 
 const TOAST_CONFIG = {
-  duration: 3000,
+  duration: 300,
   maxQueueSize: 5,
   animationDuration: 300,
   blurIntensity: 70,
