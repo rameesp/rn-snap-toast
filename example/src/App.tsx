@@ -12,6 +12,10 @@ export default function App() {
           animationDuration: 1200,
           blurIntensity: 100,
           blurType: 'light',
+          insets: {
+            top: 24,
+            bottom: 32,
+          },
         }}
       >
         <View style={styles.container}>

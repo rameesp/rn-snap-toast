@@ -17,6 +17,10 @@ interface ToastConfig {
   blurIntensity?: number;
   blurType?: BlurTint;
   position?: 'top' | 'bottom';
+  insets?: {
+    top: number;
+    bottom: number;
+  };
 }
 
 interface ToastParams {
@@ -33,11 +37,17 @@ interface ToastParams {
 interface ToastContextType {
   showToast: (params: ToastParams) => void;
   hideToast: () => void;
+  config: ToastConfig;
+  toastParams: ToastParams;
 }
 
 const ToastContext = createContext<ToastContextType>({
   showToast: () => {},
   hideToast: () => {},
+  config: {},
+  toastParams: {
+    message: '',
+  },
 });
 
 export const useToast = () => {
@@ -47,10 +57,6 @@ export const useToast = () => {
   }
   return context;
 };
-
-interface ToastState extends ToastParams {
-  isVisible: boolean;
-}
 
 const DEFAULT_DURATION = 3000;
 const MAX_QUEUE_SIZE = 10;
@@ -67,21 +73,21 @@ export const ToastProvider = ({
     duration = DEFAULT_DURATION,
     maxQueueSize = MAX_QUEUE_SIZE,
     animationDuration = ANIMATION_DURATION,
-    blurIntensity = 70,
-    blurType = 'dark',
   } = config;
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const [toastState, setToastState] = useState<ToastState>({
+  const [toastState, setToastState] = useState<{
+    isVisible: boolean;
+  }>({
     isVisible: false,
+  });
+  const [toastParams, setToastParams] = useState<ToastParams>({
     message: '',
     isSuccess: false,
     isActionable: false,
     buttonText: '',
     position: 'bottom',
-    onButtonPress: () => {},
-    onFinish: () => {},
   });
-
+  const [toastConfig, setToastConfig] = useState<ToastConfig>(config);
   const queue = useRef<ToastParams[]>([]);
   const isProcessing = useRef(false);
 
@@ -92,14 +98,14 @@ export const ToastProvider = ({
     const nextToast = queue.current.shift()!;
     const toastDuration = nextToast.duration || duration;
 
-    setToastState({
+    setToastParams({
       ...nextToast,
-      isVisible: true,
       duration: toastDuration,
     });
+    setToastState({ isVisible: true });
 
     timeoutRef.current = setTimeout(() => {
-      setToastState((prev) => {
+      setToastParams((prev) => {
         if (prev.onFinish) {
           prev.onFinish();
           return { ...prev, isVisible: false };
@@ -118,7 +124,7 @@ export const ToastProvider = ({
   }, [duration, animationDuration]);
 
   const hideToast = useCallback(() => {
-    setToastState((prev) => {
+    setToastParams((prev) => {
       if (prev.onFinish) {
         prev.onFinish();
         return { ...prev, isVisible: false };
@@ -157,6 +163,7 @@ export const ToastProvider = ({
   useEffect(() => {
     registerShowToast(showToast);
     registerHideToast(hideToast);
+    setToastConfig(config);
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
@@ -168,13 +175,11 @@ export const ToastProvider = ({
   }, []);
 
   return (
-    <ToastContext.Provider value={{ showToast, hideToast }}>
+    <ToastContext.Provider
+      value={{ showToast, hideToast, config: toastConfig, toastParams }}
+    >
       {children}
-      <Toast
-        {...toastState}
-        blurIntensity={blurIntensity}
-        blurType={blurType}
-      />
+      <Toast isVisible={toastState.isVisible} />
     </ToastContext.Provider>
   );
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
 import { FullWindowOverlay } from 'react-native-screens';
 
 interface ToastProps {
@@ -8,9 +8,11 @@ interface ToastProps {
 
 const BaseView = ({ children }: ToastProps) => {
   return (
-    <FullWindowOverlay>
-      <View style={styles.container}>{children}</View>
-    </FullWindowOverlay>
+    <SafeAreaView>
+      <FullWindowOverlay>
+        <View style={styles.container}>{children}</View>
+      </FullWindowOverlay>
+    </SafeAreaView>
   );
 };
 
