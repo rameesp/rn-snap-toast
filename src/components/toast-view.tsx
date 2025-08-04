@@ -12,7 +12,7 @@ const AnimatedView = Animated.createAnimatedComponent(View);
 const ToastView = React.memo(({}: ToastViewProps) => {
   const {
     config: {
-      position = 'bottom',
+      position: defaultPosition = 'bottom',
       insets = { top: 0, bottom: 0 },
       blurIntensity = 70,
       blurType = 'dark',
@@ -23,8 +23,12 @@ const ToastView = React.memo(({}: ToastViewProps) => {
       isActionable,
       buttonText,
       onButtonPress,
+      position: toastPosition,
     },
   } = useToast();
+
+  // Use toast-specific position if provided, otherwise fall back to config position
+  const position = toastPosition || defaultPosition;
 
   // Memoize styles to avoid unnecessary recalculations
   const styles = useMemo(

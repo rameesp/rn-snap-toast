@@ -11,7 +11,7 @@ const TOAST_CONFIG = {
   blurType: 'dark',
   position: 'bottom',
   insets: {
-    top: 24,
+    top: 64,
     bottom: 32,
   },
 };
