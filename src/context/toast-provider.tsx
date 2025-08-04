@@ -58,9 +58,9 @@ export const useToast = () => {
   return context;
 };
 
-const DEFAULT_DURATION = 3000;
+const DEFAULT_DURATION = 2000;
 const MAX_QUEUE_SIZE = 10;
-const ANIMATION_DURATION = 1000;
+const ANIMATION_DURATION = 2000;
 
 export const ToastProvider = ({
   children,
@@ -96,6 +96,7 @@ export const ToastProvider = ({
 
     isProcessing.current = true;
     const nextToast = queue.current.shift()!;
+
     const toastDuration = nextToast.duration || duration;
 
     setToastParams({
