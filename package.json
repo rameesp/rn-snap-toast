@@ -1,6 +1,6 @@
 {
   "name": "rn-snap-toast",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A modern, customizable toast component for Expo with beautiful blur effects, smooth animations, and a powerful queue system.",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
