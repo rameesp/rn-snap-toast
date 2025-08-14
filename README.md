@@ -9,10 +9,11 @@ A modern, customizable toast component for **Expo** with beautiful blur effects,
 - 🔄 **Queue System** - Handles multiple toasts with configurable queue size
 - 🎯 **Flexible Positioning** - Show toasts at top or bottom of screen
 - ⚡ **Performance Optimized** - Built with React Native Reanimated for smooth animations
-- 🎛️ **Highly Configurable** - Customize duration, blur effects, and more
+- 🎛️ **Highly Configurable** - Customize duration, blur effects, text styles, and more
 - 🔘 **Actionable Toasts** - Add buttons to toasts for user interaction
 - ✅ **Success Indicators** - Built-in success state with tick icon
 - 🛡️ **TypeScript Support** - Full TypeScript definitions included
+- 🎨 **Custom Text Styling** - Customize text appearance with custom styles
 
 ## 📦 Installation
 
@@ -52,6 +53,11 @@ export default function App() {
         insets: {
           top: 24,
           bottom: 32,
+        },
+        textStyle: {
+          color: 'white',
+          fontSize: 14,
+          fontWeight: '500',
         },
       }}
     >
@@ -103,6 +109,7 @@ interface ToastConfig {
     top: number;               // Default: 0
     bottom: number;            // Default: 0
   };
+  textStyle?: TextStyle;       // Default: undefined (uses default styles)
 }
 ```
 
@@ -196,6 +203,23 @@ showToast({
 });
 ```
 
+### Custom Text Styling
+
+```tsx
+// In ToastProvider config
+<ToastProvider
+  config={{
+    textStyle: {
+      color: 'white',
+      fontSize: 16,
+      fontWeight: '600',
+    },
+  }}
+>
+  {/* Your app */}
+</ToastProvider>
+```
+
 ## ⚙️ Configuration Options
 
 ### Global Configuration
@@ -226,6 +250,13 @@ showToast({
       top: 24,
       bottom: 32,
     },
+    
+    // Custom text styling
+    textStyle: {
+      color: 'white',
+      fontSize: 14,
+      fontWeight: '500',
+    },
   }}
 >
   {/* Your app */}
@@ -243,6 +274,7 @@ The toast component uses a modern design with:
 - Smooth fade in/out animations
 - Success tick icon for success states
 - Action buttons with iOS-style design
+- Customizable text styles
 
 ### Positioning
 
@@ -255,6 +287,20 @@ The library includes a powerful queue system that:
 - Prevents queue overflow with configurable max size
 - Processes toasts automatically
 - Maintains smooth animations between toasts
+
+### Text Styling
+
+You can customize the text appearance using the `textStyle` property in the ToastProvider config:
+
+```tsx
+textStyle: {
+  color: 'white',
+  fontSize: 16,
+  fontWeight: '600',
+  fontFamily: 'System',
+  textAlign: 'center',
+}
+```
 
 ## 🔧 Advanced Usage
 
@@ -284,6 +330,35 @@ const { showToast } = useToast();
 showToast({ message: 'First toast' });
 showToast({ message: 'Second toast' });
 showToast({ message: 'Third toast' });
+```
+
+### Service-Level Toast Calls
+
+You can call toasts from services or utilities outside of React components:
+
+```tsx
+// In a service file
+import { showToast } from 'rn-snap-toast';
+
+export const apiService = {
+  async fetchData() {
+    try {
+      const data = await fetch('/api/data');
+      showToast({
+        message: 'Data fetched successfully!',
+        isSuccess: true,
+      });
+      return data;
+    } catch (error) {
+      showToast({
+        message: 'Failed to fetch data',
+        isActionable: true,
+        buttonText: 'Retry',
+        onButtonPress: () => this.fetchData(),
+      });
+    }
+  },
+};
 ```
 
 ## 🛠️ Development
