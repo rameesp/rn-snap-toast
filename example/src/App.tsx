@@ -7,7 +7,7 @@ const TOAST_CONFIG = {
   duration: 2000,
   maxQueueSize: 5,
   animationDuration: 2000,
-  blurIntensity: 70,
+  blurIntensity: 30,
   blurType: 'dark',
   position: 'bottom',
   insets: {

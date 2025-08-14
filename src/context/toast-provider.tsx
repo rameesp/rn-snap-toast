@@ -14,6 +14,7 @@ export interface ToastConfig {
   duration?: number;
   maxQueueSize?: number;
   animationDuration?: number;
+  toastView?: React.ReactNode;
   blurIntensity?: number;
   blurType?: BlurTint;
   position?: 'top' | 'bottom';
@@ -73,6 +74,7 @@ export const ToastProvider = ({
     duration = DEFAULT_DURATION,
     maxQueueSize = MAX_QUEUE_SIZE,
     animationDuration = ANIMATION_DURATION,
+    toastView,
   } = config;
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [toastState, setToastState] = useState<{
@@ -180,7 +182,7 @@ export const ToastProvider = ({
       value={{ showToast, hideToast, config: toastConfig, toastParams }}
     >
       {children}
-      <Toast isVisible={toastState.isVisible} />
+      <Toast isVisible={toastState.isVisible} toastView={toastView} />
     </ToastContext.Provider>
   );
 };

@@ -77,7 +77,7 @@ const makeStyles = (
       shadowOpacity: 0.2,
       shadowRadius: 32,
       elevation: 5,
-      borderRadius: 30,
+      borderRadius: 8,
       paddingVertical: 16,
       paddingHorizontal: 24,
       width: '90%',
