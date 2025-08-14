@@ -9,6 +9,7 @@ import React, {
 import Toast from '../components/toast';
 import { registerHideToast, registerShowToast } from '../service/toast-service';
 import type { BlurTint } from 'expo-blur/build/BlurView.types';
+import type { TextStyle } from 'react-native';
 
 export interface ToastConfig {
   duration?: number;
@@ -18,6 +19,7 @@ export interface ToastConfig {
   blurIntensity?: number;
   blurType?: BlurTint;
   position?: 'top' | 'bottom';
+  textStyle?: TextStyle;
   insets?: {
     top: number;
     bottom: number;

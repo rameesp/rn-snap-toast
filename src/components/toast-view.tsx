@@ -16,6 +16,7 @@ const ToastView = React.memo(({}: ToastViewProps) => {
       insets = { top: 0, bottom: 0 },
       blurIntensity = 70,
       blurType = 'dark',
+      textStyle = {},
     },
     toastParams: {
       message,
@@ -45,10 +46,10 @@ const ToastView = React.memo(({}: ToastViewProps) => {
       <BlurView
         intensity={blurIntensity}
         tint={blurType}
-        style={StyleSheet.absoluteFill}
+        style={[StyleSheet.absoluteFill]}
       />
       {isSuccess && <TickIcon />}
-      <Text numberOfLines={2} style={styles.message}>
+      <Text numberOfLines={2} style={[styles.message, textStyle]}>
         {message}
       </Text>
       {isActionable && !!buttonText && (

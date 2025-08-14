@@ -14,6 +14,9 @@ const TOAST_CONFIG = {
     top: 64,
     bottom: 32,
   },
+  textStyle: {
+    color: 'white',
+  },
 };
 
 const styles = StyleSheet.create({
