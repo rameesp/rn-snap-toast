@@ -10,12 +10,14 @@ const TOAST_CONFIG = {
   blurIntensity: 30,
   blurType: 'dark',
   position: 'bottom',
+  disableBlur: true,
+  backdropColor: 'rgba(0, 0, 0, 0.1)',
   insets: {
     top: 64,
     bottom: 32,
   },
   textStyle: {
-    color: 'white',
+    color: '#000',
   },
 };
 

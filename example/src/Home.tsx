@@ -48,6 +48,11 @@ const Home = () => {
     showContextToast({
       message: 'This is a basic toast message',
       position: 'bottom',
+      toastView: (
+        <View style={styles.customToastView}>
+          <Text>This is a basic toast message</Text>
+        </View>
+      ),
     });
   };
 
@@ -302,5 +307,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#666',
     textAlign: 'center',
+  },
+  customToastView: {
+    backgroundColor: 'red',
+    padding: 10,
+    borderRadius: 10,
+    width: '100%',
   },
 });

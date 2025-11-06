@@ -18,8 +18,11 @@ export interface ToastConfig {
   toastView?: React.ReactNode;
   blurIntensity?: number;
   blurType?: BlurTint;
+  disableBlur?: boolean;
   position?: 'top' | 'bottom';
+  blurFallbackColor?: string;
   textStyle?: TextStyle;
+  backdropColor?: string;
   insets?: {
     top: number;
     bottom: number;
@@ -33,6 +36,7 @@ export interface ToastParams {
   isActionable?: boolean;
   buttonText?: string;
   position?: 'top' | 'bottom';
+  toastView?: React.ReactNode;
   onButtonPress?: () => void;
   onFinish?: () => void;
 }
@@ -90,6 +94,7 @@ export const ToastProvider = ({
     isActionable: false,
     buttonText: '',
     position: 'bottom',
+    toastView: null,
   });
   const [toastConfig, setToastConfig] = useState<ToastConfig>(config);
   const queue = useRef<ToastParams[]>([]);
