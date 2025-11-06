@@ -21,6 +21,8 @@ This package is designed specifically for **Expo** projects. Make sure you have 
 
 ```sh
 npm install rn-snap-toast
+# or
+yarn add rn-snap-toast
 ```
 
 ### Required Expo Dependencies
@@ -33,6 +35,13 @@ npx expo install expo-blur react-native-reanimated react-native-screens react-na
 
 **Note:** This package is **Expo-only** and requires Expo's managed workflow or development builds. It is not compatible with bare React Native projects.
 
+### Requirements
+
+- Expo SDK >= 53.0.0
+- React >= 18.0.0
+- React Native >= 0.73.0
+- Node >= 18.0.0
+
 ## 🚀 Quick Start
 
 ### 1. Wrap your app with ToastProvider
@@ -44,9 +53,9 @@ export default function App() {
   return (
     <ToastProvider
       config={{
-        duration: 3000,
+        duration: 2000,
         maxQueueSize: 5,
-        animationDuration: 300,
+        animationDuration: 2000,
         blurIntensity: 70,
         blurType: 'dark',
         position: 'bottom',
@@ -99,17 +108,22 @@ The main provider component that wraps your app and provides toast functionality
 
 ```tsx
 interface ToastConfig {
-  duration?: number;           // Default: 3000ms
+  duration?: number;           // Default: 2000ms
   maxQueueSize?: number;       // Default: 10
-  animationDuration?: number;  // Default: 300ms
+  animationDuration?: number;  // Default: 2000ms
   blurIntensity?: number;      // Default: 70
-  blurType?: 'light' | 'dark'; // Default: 'dark'
+  blurType?: 'light' | 'dark' | 'default'; // Default: 'dark'
+  disableBlur?: boolean;       // Default: false
+  blurFallbackColor?: string;  // Fallback color when blur is disabled
+  backdropColor?: string;      // Background color for the toast
+  borderRadius?: number;       // Border radius for the toast container
   position?: 'top' | 'bottom'; // Default: 'bottom'
   insets?: {
     top: number;               // Default: 0
     bottom: number;            // Default: 0
   };
   textStyle?: TextStyle;       // Default: undefined (uses default styles)
+  toastView?: React.ReactNode; // Custom toast view component
 }
 ```
 
@@ -133,6 +147,7 @@ interface ToastParams {
   isActionable?: boolean;            // Optional: Enable action button
   buttonText?: string;               // Optional: Text for action button
   position?: 'top' | 'bottom';      // Optional: Toast position
+  toastView?: React.ReactNode;       // Optional: Custom toast view component
   onButtonPress?: () => void;       // Optional: Action button callback
   onFinish?: () => void;            // Optional: Called when toast finishes
 }
@@ -192,6 +207,19 @@ showToast({
 });
 ```
 
+### Custom Toast View per Toast
+
+```tsx
+showToast({
+  message: 'Custom styled toast',
+  toastView: (
+    <View style={{ padding: 20, backgroundColor: 'purple' }}>
+      <Text style={{ color: 'white' }}>Custom Content</Text>
+    </View>
+  ),
+});
+```
+
 ### Toast with Callback
 
 ```tsx
@@ -220,6 +248,55 @@ showToast({
 </ToastProvider>
 ```
 
+### Custom Toast View
+
+You can provide a completely custom toast view component:
+
+```tsx
+// In ToastProvider config
+<ToastProvider
+  config={{
+    toastView: <CustomToastComponent />,
+  }}
+>
+  {/* Your app */}
+</ToastProvider>
+
+// Or per-toast
+showToast({
+  message: 'Custom toast',
+  toastView: <MyCustomView />,
+});
+```
+
+### Disable Blur Effect
+
+If you want to disable the blur effect and use a solid background:
+
+```tsx
+<ToastProvider
+  config={{
+    disableBlur: true,
+    blurFallbackColor: 'rgba(0, 0, 0, 0.8)',
+    backdropColor: 'rgba(0, 0, 0, 0.9)',
+  }}
+>
+  {/* Your app */}
+</ToastProvider>
+```
+
+### Custom Border Radius
+
+```tsx
+<ToastProvider
+  config={{
+    borderRadius: 20, // Custom border radius
+  }}
+>
+  {/* Your app */}
+</ToastProvider>
+```
+
 ## ⚙️ Configuration Options
 
 ### Global Configuration
@@ -228,19 +305,31 @@ showToast({
 <ToastProvider
   config={{
     // Toast duration in milliseconds
-    duration: 3000,
+    duration: 2000,
     
     // Maximum number of toasts in queue
     maxQueueSize: 5,
     
     // Animation duration in milliseconds
-    animationDuration: 300,
+    animationDuration: 2000,
     
     // Blur effect intensity (0-100)
     blurIntensity: 70,
     
     // Blur effect type
-    blurType: 'dark', // 'light' | 'dark'
+    blurType: 'dark', // 'light' | 'dark' | 'default'
+    
+    // Disable blur effect
+    disableBlur: false,
+    
+    // Fallback color when blur is disabled
+    blurFallbackColor: 'rgba(0, 0, 0, 0.8)',
+    
+    // Background color for the toast
+    backdropColor: 'rgba(0, 0, 0, 0.9)',
+    
+    // Border radius for the toast container
+    borderRadius: 12,
     
     // Default position for toasts
     position: 'bottom', // 'top' | 'bottom'
@@ -257,6 +346,9 @@ showToast({
       fontSize: 14,
       fontWeight: '500',
     },
+    
+    // Custom toast view component
+    toastView: undefined,
   }}
 >
   {/* Your app */}
@@ -368,23 +460,58 @@ export const apiService = {
 ```sh
 # Install dependencies
 yarn install
+# or
+npm install
 
 # Run the example app
 yarn example
+# or
+npm run example
 ```
 
 ### Building
 
 ```sh
 # Build the library
-yarn prepare
+yarn build
+# or
+npm run build
 
 # Type checking
 yarn typecheck
+# or
+npm run typecheck
 
 # Linting
 yarn lint
+# or
+npm run lint
+
+# Fix linting issues
+yarn lint:fix
+# or
+npm run lint:fix
 ```
+
+### Testing
+
+```sh
+# Run tests
+yarn test
+# or
+npm test
+
+# Run tests in watch mode
+yarn test:watch
+# or
+npm run test:watch
+```
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
+
+Please make sure to update tests as appropriate and follow the existing code style.
 
 ## 📄 License
 
