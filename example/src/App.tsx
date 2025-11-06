@@ -11,6 +11,7 @@ const TOAST_CONFIG = {
   blurType: 'dark',
   position: 'bottom',
   disableBlur: true,
+  borderRadius: 24,
   backdropColor: 'rgba(0, 0, 0, 0.1)',
   insets: {
     top: 64,

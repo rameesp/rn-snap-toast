@@ -29,6 +29,7 @@ const ToastView = React.memo(() => {
       disableBlur = false,
       blurFallbackColor = '#fff',
       backdropColor = 'rgba(0, 0, 0, 0.1)',
+      borderRadius = 12,
     },
     toastParams: {
       message,
@@ -104,7 +105,11 @@ const ToastView = React.memo(() => {
         <AnimatedView
           entering={FadeIn.duration(ANIMATION_DURATION).easing(Easing.linear)}
           exiting={FadeOut.duration(ANIMATION_DURATION).easing(Easing.linear)}
-          style={[styles.container, styles.containerCustom]}
+          style={[
+            styles.container,
+            styles.containerCustom,
+            { borderRadius: borderRadius ?? 12 },
+          ]}
         >
           {toastView}
         </AnimatedView>
@@ -123,7 +128,11 @@ const ToastView = React.memo(() => {
       <AnimatedView
         entering={FadeIn.duration(ANIMATION_DURATION).easing(Easing.linear)}
         exiting={FadeOut.duration(ANIMATION_DURATION).easing(Easing.linear)}
-        style={[styles.container, containerBackgroundStyle]}
+        style={[
+          styles.container,
+          containerBackgroundStyle,
+          { borderRadius: borderRadius ?? 12 },
+        ]}
       >
         {/* Only show blur effect if enabled */}
         {!disableBlur && (

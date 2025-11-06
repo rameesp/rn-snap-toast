@@ -23,6 +23,7 @@ export interface ToastConfig {
   blurFallbackColor?: string;
   textStyle?: TextStyle;
   backdropColor?: string;
+  borderRadius?: number;
   insets?: {
     top: number;
     bottom: number;
